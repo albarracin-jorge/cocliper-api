@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.tmp/
+tmp/
+coverage/
+.DS_Store
+.github
