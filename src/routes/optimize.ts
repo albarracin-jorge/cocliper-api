@@ -3,7 +3,7 @@ import multer from "multer";
 import path from "node:path";
 import { apiKeyAuth } from "../middleware/auth.js";
 import { MAX_FILE_SIZE } from "../config/env.js";
-import { optimizeVideo } from "../services/ffmpeg.js";
+import { optimizeVideo, sanitizeCompressionOptions } from "../services/ffmpeg.js";
 import { ensureDir, safeUnlink } from "../utils/file.js";
 
 const router = Router();
@@ -56,11 +56,21 @@ router.post(
         path: req.file.path
       });
 
+      // Parse compression options from form fields
+      const rawOptions: Record<string, unknown> = {};
+      for (const key of ["crf", "preset", "width", "fps", "audioBitrate", "videoCodec", "audioCodec"]) {
+        if (req.body[key] !== undefined) {
+          rawOptions[key] = req.body[key];
+        }
+      }
+      const compressionOptions = sanitizeCompressionOptions(rawOptions);
+      console.log(`[${requestId}] Compression options`, compressionOptions);
+
       await ensureDir(path.dirname(req.file.path));
       await ensureDir("tmp/optimized");
 
       console.log(`[${requestId}] Starting optimization`);
-      const outputPath = await optimizeVideo(req.file.path, "tmp/optimized", requestId);
+      const outputPath = await optimizeVideo(req.file.path, "tmp/optimized", requestId, compressionOptions);
       console.log(`[${requestId}] Optimization finished`, { outputPath });
 
       res.setHeader("Content-Type", "video/mp4");
