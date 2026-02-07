@@ -82,6 +82,8 @@ export async function optimizeVideo(
   return await new Promise((resolve, reject) => {
     ffmpeg(inputPath)
       .outputOptions([
+        "-map 0:v:0",          // Map only first video stream
+        "-map 0:a:0?",         // Map first audio stream if exists (? makes it optional)
         `-c:v ${videoCodec}`,
         `-crf ${crf}`,
         `-preset ${preset}`,
