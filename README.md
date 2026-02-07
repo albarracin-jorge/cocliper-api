@@ -17,7 +17,7 @@ Copy `.env.example` to `.env` and adjust the values.
 
 ### `POST /api/optimize`
 - Header: `x-api-key: <API_KEY_HASH>`
-- Form-data: `video` (mp4 or webm file, up to 10 GB)
+- Form-data: `video` (mp4, webm, avi, or mov file, up to 10 GB)
 - Response: optimized video in mp4 format.
 
 ## Development

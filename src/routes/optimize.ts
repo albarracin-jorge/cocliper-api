@@ -16,7 +16,7 @@ const upload = multer({
     file: Express.Multer.File,
     callback: multer.FileFilterCallback
   ) => {
-    const allowed = ["video/mp4", "video/webm"];
+    const allowed = ["video/mp4", "video/webm", "video/avi", "video/mov"];
     console.log("[multer] fileFilter", {
       mimetype: file.mimetype,
       originalname: file.originalname,

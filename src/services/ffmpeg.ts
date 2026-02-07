@@ -89,7 +89,8 @@ export async function optimizeVideo(
         `-r ${fps}`,
         `-c:a ${audioCodec}`,
         `-b:a ${audioBitrate}`,
-        "-movflags +faststart"
+        "-movflags +faststart",
+        "-pix_fmt yuv420p"
       ])
       .on("start", (commandLine) => {
         if (requestId) {
