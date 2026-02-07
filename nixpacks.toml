@@ -1,0 +1,11 @@
+[phases.setup]
+nixpkgs = ["nodejs_20", "ffmpeg"]
+
+[phases.build]
+cmds = ["npm ci", "npm run build"]
+
+[phases.start]
+cmd = "node dist/index.js"
+
+[build]
+inclusions = ["src", "tsconfig.json", "package.json", "package-lock.json", ".env.example"]

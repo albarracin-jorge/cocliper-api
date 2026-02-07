@@ -1,30 +1,45 @@
 # Cocliper API
 
-API en TypeScript para comprimir y optimizar videos (mp4/webm) para compartir en plataformas como Discord o WhatsApp.
+A TypeScript API for compressing and optimizing videos (mp4/webm) for sharing on messaging platforms like Discord or WhatsApp.
 
-## Requisitos
+## Requirements
 - Node.js 20+
-- ffmpeg instalado (el Dockerfile ya lo incluye)
+- ffmpeg installed (included in Docker and Nixpacks)
 
-## Variables de entorno
-Copia `.env.example` a `.env` y ajusta valores.
+## Environment Variables
+Copy `.env.example` to `.env` and adjust the values.
 
-- `API_KEY_HASH` (requerida): clave usada para autenticar solicitudes.
-- `PORT` (opcional): puerto HTTP. Por defecto `3000`.
-- `MAX_FILE_SIZE` (opcional): tamaño máximo en bytes. Por defecto 4 GB.
+- `API_KEY_HASH` (required): API key used to authenticate requests.
+- `PORT` (optional): HTTP port. Default is `3000`.
+- `MAX_FILE_SIZE` (optional): maximum file size in bytes. Default is 10 GB.
 
 ## Endpoints
 
 ### `POST /api/optimize`
 - Header: `x-api-key: <API_KEY_HASH>`
-- Form-data: `video` (archivo mp4 o webm, hasta 4 GB)
-- Respuesta: video optimizado en formato mp4.
+- Form-data: `video` (mp4 or webm file, up to 10 GB)
+- Response: optimized video in mp4 format.
 
-## Desarrollo
+## Development
 
-- `npm run dev` inicia el servidor con recarga.
-- `npm run build` compila a `dist/`.
-- `npm start` ejecuta el build.
+- `npm run dev` starts the server with auto-reload.
+- `npm run build` compiles TypeScript to `dist/`.
+- `npm start` runs the compiled build.
 
 ## Docker (Coolify)
-Usa el `Dockerfile` incluido para build y deploy.
+Use the included `Dockerfile` for build and deployment.
+
+## Nixpacks (Railway, Render, Fly.io)
+Use `nixpacks.toml` for deployments with Nixpacks. The configuration includes:
+- Node.js 20
+- ffmpeg (for video optimization)
+- Automatic build and start scripts
+
+Example with Railway:
+```bash
+railway link
+```
+
+Or simply push to your repository and Railway/Render will automatically detect `nixpacks.toml`.
+
+```
